@@ -6,5 +6,5 @@ includes basic MVC components
 #Login
 #Register
 #Profile(with avatar)
-#Settings
+#Settings(personal data and password reset)
 #Images
