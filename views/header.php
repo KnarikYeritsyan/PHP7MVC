@@ -29,7 +29,7 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li class="active"> <a  href="<?php echo URL; ?>index">Home</a></li>
-                <li><a  href="<?php echo URL; ?>help">About</a></li>
+                <li><a  href="<?php echo URL; ?>about">About</a></li>
                 <?php if (Session::get('loggedIn')==true):
                 $id = $_SESSION['user_id'];?>
                 <li class="dropdown">
