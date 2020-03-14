@@ -6,15 +6,21 @@ class View
     {
 
     }
-    public function render($name, $noninclude = false)
+    public function render($name, $vars = [], $noninclude = false)
     {
+        ob_start();
+        extract($vars);
+        require $_SERVER['DOCUMENT_ROOT'].'/views/'.$name.'.php';
+        $layout_content = ob_get_clean();
         if ($noninclude == true)
         {
-            require 'views/'.$name.'.php';
+            $layout_content;
+//            require 'views/'.$name.'.php';
         }else{
-            require 'views/'.'header.php';
-            require 'views/'.$name.'.php';
-            require 'views/'.'footer.php';
+            require $_SERVER['DOCUMENT_ROOT'].'/views/layouts/default.php';
+//            require 'views/'.'header.php';
+//            require 'views/'.$name.'.php';
+//            require 'views/'.'footer.php';
         }
 
     }

@@ -110,6 +110,9 @@
                             $('#error').html("<span class='text-danger'>Given username is already taken, please choose another one</span>");
                             document.getElementById("username").style.borderColor = "red";
                         }
+                    },
+                    error:function (data) {
+                        console.log('Error')
                     }
                 });
             }

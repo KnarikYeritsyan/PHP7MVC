@@ -6,7 +6,49 @@ class Register_Model extends Model
     {
         parent::__construct();
     }
-    public function run()
+
+    public function create($data)
+    {
+        $username = $data['username'];
+        $password = $data['password'];
+        $first_name = $data['first_name'];
+        $last_name = $data['last_name'];
+        $password1 = $data['password1'];
+//        $remember = $_POST['remember'];
+
+        $sthu = $this->db->query(" SELECT username FROM ".DB_TABLE1." WHERE `username` = '$username'");
+        $countu = $sthu->rowCount();
+        if ($countu == 0){
+        try {
+            $sth = $this->db->prepare(" INSERT INTO " . DB_TABLE1 . " (`id`, `username`, `password`, `first_name`, `last_name`) VALUES (NULL, :username  , :password, :firstname, :lastname  )");
+            $sth->execute(array(':username' => $username,
+                ':password' => $password,
+                ':firstname' => $first_name,
+                ':lastname' => $last_name
+            ));
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+        if ($sth == true) {
+            $sthh = $this->db->query(" SELECT * FROM " . DB_TABLE1 . " WHERE `username` = '$username' AND `password` = '$password'");
+            $data = $sthh->fetch();
+            Session::init();
+            Session::set('user_id', $data['id']);
+            Session::set('loggedIn', true);
+            /*if ($remember == 1) {
+                setcookie("username", $username, time() + 60 * 60 * 2);
+                setcookie("password", $password, time() + 60 * 60 * 2);
+            }*/
+            return true;
+        }else{
+            exit();
+        }
+        }else{
+            exit();
+        }
+    }
+
+    public function run($data)
     {
         $username = $_POST['username'];
         $password = $_POST['password'];

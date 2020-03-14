@@ -7,8 +7,9 @@ if (isset($_SESSION["user_id"]))
 }
 ?>
 <h1>Login page</h1>
+<h1><?php echo $title?></h1>
 <div style = "padding: 100px 100px 10px;">
-
+<img src="../../public/images/profile.png">
     <form class = "bs-example bs-example-form"  action="login/run" method="post" id="MyForm" novalidate>
         <div class = "row">
             <div class = "col-lg-8">
@@ -51,7 +52,7 @@ if (isset($_COOKIE["username"]) && isset($_COOKIE["password"]))
 }
 ?>
 
-<script>
+<!--<script>
     $(document).ready(function () {
 
         $('#MyForm').submit(function (event) {
@@ -66,7 +67,7 @@ if (isset($_COOKIE["username"]) && isset($_COOKIE["password"]))
             if ($.trim(username).length > 0 && $.trim(password).length > 0)
             {
                 $.ajax({
-                    url:"<?php echo URL; ?>login/run",
+                    url:"<?php /*echo URL; */?>login/run",
                     method:"POST",
                     data:{username:username, password:password, remember:remember},
                     cashe:false,
@@ -74,7 +75,7 @@ if (isset($_COOKIE["username"]) && isset($_COOKIE["password"]))
                         if (data)
                         {
                             $("body").hide();
-                            window.location.href= "<?php echo URL; ?>dashboard";
+                            window.location.href= "<?php /*echo URL; */?>dashboard";
                         }
                         else
                         {
@@ -94,4 +95,4 @@ if (isset($_COOKIE["username"]) && isset($_COOKIE["password"]))
             }
         });
     });
-</script>
+</script>-->

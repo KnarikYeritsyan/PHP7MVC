@@ -1,9 +1,9 @@
 <?php Session::init(); ?>
 <h1>User</h1>
 
-<?php $id = $_SESSION['user_id']; $username = $_SESSION['username'];
-$password = $_SESSION['password'];
-$firstname = $_SESSION['firstname']; $lastname = $_SESSION['lastname'];
+<?php $id = $data['id']; $username = $data['username'];
+$password = $data['password'];
+$firstname = $data['first_name']; $lastname = $data['last_name'];
 ?>
 
 <div style = "padding: 100px 100px 10px;">

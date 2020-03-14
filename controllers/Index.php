@@ -1,4 +1,5 @@
 <?php
+namespace controllers;
 
 class Index extends Controller
 {
@@ -8,7 +9,7 @@ class Index extends Controller
     }
     function index()
     {
-        $this->vew->render('index'.DS.'index');
+        $this->view->render('index'.DS.'index');
     }
 
 }

@@ -7,20 +7,19 @@ class Users_Model extends Model
 		parent::__construct();
 	}
 
-	public function edit()
+	public function edit(array $data)
 	{
+        $id = $data['id'];
+        $username = $data['username'];
+        $password = $data['password'];
+        $first_name = $data['first_name'];
+        $last_name = $data['last_name'];
+//        $remember = $data['remember'];
 
-        $id = $_POST['id'];
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $first_name = $_POST['first_name'];
-        $last_name = $_POST['last_name'];
-        $remember = $_POST['remember'];
-
-        $sthu = $this->db->query(" SELECT username FROM ".DB_TABLE1." WHERE `username` = '$username'");
+        $sthu = $this->db->query(" SELECT username FROM ".DB_TABLE1." WHERE `username` = '$username' and id <>'$id'");
         $countu = $sthu->rowCount();
 
-        if ($countu == 0 && strlen($username)>0 && strlen($password)>5)
+        if ($countu == 0)
         {
         try{
             $sth = $this->db->query(" UPDATE ".DB_TABLE1." SET `username` = '$username', `password` = '$password', `first_name` = '$first_name', `last_name` = '$last_name' WHERE " . DB_TABLE1 . ".`id` = '$id'");
@@ -29,19 +28,11 @@ class Users_Model extends Model
             die($e->getMessage());
         }
         if ($sth == true) {
-
-            Session::init();
-            //Session::set('loggedIn',true);
-            Session::set('username',$username);
-            Session::set('password',$password);
-            Session::set('firstname',$first_name);
-            Session::set('lastname',$last_name);
-            echo "Changed Successfully";
-            if ($remember == 1) {
+            return true;
+            /*if ($remember == 1) {
                 setcookie("username", $username, time() + 60 * 60 * 2);
                 setcookie("password", $password, time() + 60 * 60 * 2);
-            }
-            header("Refresh:0; url=".URL.'dashboard');
+            }*/
         }else {
             exit();
         }
@@ -50,23 +41,22 @@ class Users_Model extends Model
         }
 
 	}
-    public function userDelete()
+    public function userDelete($id)
     {
-        $id = $_GET['id'];
         try
         {
             $sth = $this->db->query(" DELETE FROM " .DB_TABLE1. " WHERE id = '$id' LIMIT 1 ");
-            $sthh = $this->db->query(" DELETE FROM ".DB_TABLE2." WHERE username = '$id'");
+//            $sthh = $this->db->query(" DELETE FROM ".DB_TABLE2." WHERE username = '$id'");
 
         }catch (PDOException $e){
             die($e->getMessage());
         }
-        if ($sth == true && $sthh == true) {
-            Session::set('loggedIn', false);
-            header('Refresh:0;url= ' . URL . 'login');
+        if ($sth == true
+//            && $sthh == true
+        ) {
+            return true;
         }else {
-            Session::set('loggedIn', true);
-            header('Refresh:0;url= ' . URL . 'dashboard');
+            return false;
         }
     }
     public function display()

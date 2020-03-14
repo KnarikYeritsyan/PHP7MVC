@@ -1,2 +1,2 @@
 
-This page doesn't exist
+<h1>Page not found 404</h1>

@@ -6,19 +6,14 @@ class Login_Model extends Model
     {
         parent::__construct();
     }
-    public function run()
+    public function authenticate($username,$password)
     {
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $remember = $_POST['remember'];
-
-        if (strlen($username)>0 && strlen($password)>0)
-        {
         try {
             $sth = $this->db->prepare("SELECT * FROM ".DB_TABLE1." WHERE `username` = :username AND `password` = :password ");
-            $sth->execute(array(':username' => $username,
+            $sth->execute([
+                ':username' => $username,
                 ':password' => $password
-            ));
+            ]);
 
         } catch (PDOException $e) {
             die($e->getMessage());
@@ -28,31 +23,24 @@ class Login_Model extends Model
             $data = $sth->fetch();
             Session::init();
             Session::set('user_id', $data['id']);
-            Session::set('username', $username);
-            Session::set('password', $password);
-            Session::set('firstname', $data['first_name']);
-            Session::set('lastname', $data['last_name']);
-            Session::set('profile', $data['profile_picture']);
-            Session::set('comment', $data['profile_comment']);
             Session::set('loggedIn', true);
-            if ($remember == 1)
-            {
-                setcookie("username", $username,time()+60*60*7);
-                setcookie("password", $password,time()+60*60*7);
-            }
-            header('location: ' . URL . 'dashboard');
-        } else {
-            exit();
-        }
+            return true;
         }else{
-            exit();
+            return false;
         }
     }
 
-    public function profile()
+    public function get_user($id)
     {
-        Session::init();
-        $user_id = $_GET['user_id'];
+        $sql = "SELECT * FROM users WHERE id =" . $id;
+        $req = $this->db->prepare($sql);
+        $req->execute();
+        return $req->fetch();
+    }
+
+    public function profile($id)
+    {
+        $user_id = $id;
         if ($_POST["action"] == "insert") {
             $text = $_POST['text'];
             $file = addslashes($_FILES['image']['tmp_name']);

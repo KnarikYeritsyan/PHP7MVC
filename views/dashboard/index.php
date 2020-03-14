@@ -14,10 +14,11 @@ if (isset($_COOKIE["username"]) && isset($_COOKIE["password"]))
 ?>
 
 <h1><?php
-    $id = $_SESSION['user_id'];
-    $username = $_SESSION['username']; $password = $_SESSION['password'];
-    $firstname = $_SESSION['firstname']; $lastname = $_SESSION['lastname'];
-    $profile = $_SESSION['profile'];
+    $id = $data['id'];
+    $username = $data['username']; $password = $data['password'];
+    $firstname = $data['first_name']; $lastname = $data['last_name'];
+//    $profile = $data['profile'];
+    $profile = [];
     echo '<span style="color:darkred;text-align:center;">Welcome '.$firstname.'  '.$lastname.'</span>' ; ?></h1>
 
 <br />
@@ -29,10 +30,10 @@ if (isset($_COOKIE["username"]) && isset($_COOKIE["password"]))
 <?php else:?>
 
     <?php
-    $profile = $_SESSION['profile'];
-    if (isset($_SESSION['comment']))
+    $profile = $data['profile'];
+    if (isset($data['comment']))
     {
-    $comment = $_SESSION['comment'];
+    $comment = $data['comment'];
    }
     if (!empty($comment))
     {

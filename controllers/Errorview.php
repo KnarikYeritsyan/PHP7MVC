@@ -1,16 +1,15 @@
 <?php
 namespace controllers;
 
-class About extends Controller
+class Errorview extends Controller
 {
     function __construct()
     {
         parent::__construct();
-
     }
     function index()
     {
-        $this->view->render('about' .DS.'index');
+        $this->view->render('error/index');
     }
 
 }
